@@ -1,0 +1,288 @@
+.veiculo-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+
+  h1 {
+    color: #333;
+    margin: 0;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &.btn-primary {
+      background: #007bff;
+      color: white;
+
+      &:hover {
+        background: #0056b3;
+      }
+    }
+  }
+}
+
+.filters {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+
+  h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+  }
+
+  .filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 15px;
+    align-items: end;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .form-control {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      }
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    gap: 10px;
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+
+      &.btn-secondary {
+        background: #6c757d;
+        color: white;
+
+        &:hover {
+          background: #545b62;
+        }
+      }
+
+      &.btn-outline {
+        background: transparent;
+        color: #6c757d;
+        border: 1px solid #6c757d;
+
+        &:hover {
+          background: #6c757d;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+
+  &.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  p {
+    color: #666;
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.veiculos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.veiculo-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .veiculo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+
+    h3 {
+      margin: 0;
+      color: #333;
+      font-size: 1.2em;
+    }
+
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      font-weight: 500;
+      background: #d4edda;
+      color: #155724;
+
+      &.vendido {
+        background: #f8d7da;
+        color: #721c24;
+      }
+    }
+  }
+
+  .veiculo-info {
+    margin-bottom: 20px;
+
+    p {
+      margin: 8px 0;
+      color: #555;
+      line-height: 1.4;
+
+      strong {
+        color: #333;
+      }
+    }
+  }
+
+  .veiculo-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &.btn-success {
+        background: #28a745;
+        color: white;
+
+        &:hover {
+          background: #1e7e34;
+        }
+      }
+
+      &.btn-primary {
+        background: #007bff;
+        color: white;
+
+        &:hover {
+          background: #0056b3;
+        }
+      }
+
+      &.btn-danger {
+        background: #dc3545;
+        color: white;
+
+        &:hover {
+          background: #c82333;
+        }
+      }
+    }
+  }
+}
+
+.no-veiculos {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+
+  p {
+    margin: 0;
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 768px) {
+  .veiculos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .veiculo-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}

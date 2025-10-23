@@ -1,0 +1,115 @@
+<div class="veiculo-form-container">
+  <div class="form-header">
+    <h2>{{ veiculo ? 'Editar Veículo' : 'Novo Veículo' }}</h2>
+    <button class="btn btn-outline" (click)="onCancel()">
+      <i class="icon">×</i> Cancelar
+    </button>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #veiculoForm="ngForm">
+    <!-- Mensagem de erro -->
+    <div *ngIf="error" class="alert alert-error">
+      {{ error }}
+    </div>
+
+    <div class="form-grid">
+      <!-- Nome do Veículo -->
+      <div class="form-group">
+        <label for="veiculo">Nome do Veículo *</label>
+        <input 
+          type="text" 
+          id="veiculo" 
+          name="veiculo"
+          [(ngModel)]="formData.veiculo" 
+          class="form-control"
+          placeholder="Ex: Civic, Corolla, Gol"
+          required>
+      </div>
+
+      <!-- Marca -->
+      <div class="form-group">
+        <label for="marca">Marca *</label>
+        <select 
+          id="marca" 
+          name="marca"
+          [(ngModel)]="formData.marca" 
+          class="form-control"
+          required>
+          <option value="">Selecione uma marca</option>
+          <option *ngFor="let marca of marcasValidas" [value]="marca">
+            {{ marca }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Ano -->
+      <div class="form-group">
+        <label for="ano">Ano *</label>
+        <input 
+          type="number" 
+          id="ano" 
+          name="ano"
+          [(ngModel)]="formData.ano" 
+          class="form-control"
+          min="1900"
+          [max]="new Date().getFullYear() + 1"
+          required>
+      </div>
+
+      <!-- Cor -->
+      <div class="form-group">
+        <label for="cor">Cor</label>
+        <input 
+          type="text" 
+          id="cor" 
+          name="cor"
+          [(ngModel)]="formData.cor" 
+          class="form-control"
+          placeholder="Ex: Branco, Preto, Prata">
+      </div>
+
+      <!-- Descrição -->
+      <div class="form-group full-width">
+        <label for="descricao">Descrição</label>
+        <textarea 
+          id="descricao" 
+          name="descricao"
+          [(ngModel)]="formData.descricao" 
+          class="form-control"
+          rows="3"
+          placeholder="Descrição detalhada do veículo..."></textarea>
+      </div>
+
+      <!-- Status de Venda -->
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            name="vendido"
+            [(ngModel)]="formData.vendido">
+          <span class="checkmark"></span>
+          Veículo vendido
+        </label>
+      </div>
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn btn-outline" 
+        (click)="onCancel()"
+        [disabled]="loading">
+        Cancelar
+      </button>
+      
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="loading || !veiculoForm.form.valid">
+        <span *ngIf="loading" class="spinner-small"></span>
+        {{ loading ? 'Salvando...' : (veiculo ? 'Atualizar' : 'Criar') }}
+      </button>
+    </div>
+  </form>
+</div>

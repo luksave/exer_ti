@@ -1,0 +1,94 @@
+<div class="dashboard-container">
+  <h1>Dashboard - Estatísticas de Veículos</h1>
+
+  <!-- Mensagem de erro -->
+  <div *ngIf="error" class="alert alert-error">
+    {{ error }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando estatísticas...</p>
+  </div>
+
+  <!-- Estatísticas -->
+  <div *ngIf="!loading" class="stats-grid">
+    
+    <!-- Card de Veículos Vendidos -->
+    <div class="stat-card vendidos">
+      <div class="stat-icon">🚗</div>
+      <div class="stat-content">
+        <h3>{{ vendidosCount }}</h3>
+        <p>Veículos Vendidos</p>
+      </div>
+    </div>
+
+    <!-- Card de Veículos da Última Semana -->
+    <div class="stat-card ultima-semana">
+      <div class="stat-icon">📅</div>
+      <div class="stat-content">
+        <h3>{{ veiculosUltimaSemana.length }}</h3>
+        <p>Cadastrados na Última Semana</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Distribuições -->
+  <div *ngIf="!loading" class="distributions">
+    
+    <!-- Distribuição por Década -->
+    <div class="distribution-card">
+      <h2>Distribuição por Década de Fabricação</h2>
+      <div class="distribution-list">
+        <div *ngFor="let item of distribuicaoDecada" class="distribution-item">
+          <div class="distribution-label">{{ item.decada }}</div>
+          <div class="distribution-bar">
+            <div class="bar-fill" [style.width.%]="item.percentual"></div>
+          </div>
+          <div class="distribution-values">
+            <span class="quantidade">{{ item.quantidade }} veículos</span>
+            <span class="percentual">{{ formatarPercentual(item.percentual) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Distribuição por Fabricante -->
+    <div class="distribution-card">
+      <h2>Distribuição por Fabricante</h2>
+      <div class="distribution-list">
+        <div *ngFor="let item of distribuicaoFabricante" class="distribution-item">
+          <div class="distribution-label">{{ item.fabricante }}</div>
+          <div class="distribution-bar">
+            <div class="bar-fill fabricante" [style.width.%]="item.percentual"></div>
+          </div>
+          <div class="distribution-values">
+            <span class="quantidade">{{ item.quantidade }} veículos</span>
+            <span class="percentual">{{ formatarPercentual(item.percentual) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Veículos da Última Semana -->
+    <div class="distribution-card" *ngIf="veiculosUltimaSemana.length > 0">
+      <h2>Veículos Cadastrados na Última Semana</h2>
+      <div class="veiculos-recentes">
+        <div *ngFor="let veiculo of veiculosUltimaSemana" class="veiculo-recente">
+          <div class="veiculo-info">
+            <h4>{{ veiculo.veiculo }}</h4>
+            <p>{{ veiculo.marca }} - {{ veiculo.ano }}</p>
+            <p *ngIf="veiculo.cor">Cor: {{ veiculo.cor }}</p>
+          </div>
+          <div class="veiculo-meta">
+            <span class="data">{{ formatarData(veiculo.created) }}</span>
+            <span class="status" [class.vendido]="veiculo.vendido">
+              {{ veiculo.vendido ? 'Vendido' : 'Disponível' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

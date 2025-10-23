@@ -1,0 +1,94 @@
+<div class="veiculo-list-container">
+  <div class="header">
+    <h1>Gerenciamento de Veículos</h1>
+    <button class="btn btn-primary" (click)="novoVeiculo()">
+      <i class="icon">+</i> Novo Veículo
+    </button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <h3>Filtros</h3>
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="marca">Marca:</label>
+        <select id="marca" [(ngModel)]="filtro.marca" class="form-control">
+          <option value="">Todas as marcas</option>
+          <option *ngFor="let marca of marcasValidas" [value]="marca">{{ marca }}</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="ano">Ano:</label>
+        <input type="number" id="ano" [(ngModel)]="filtro.ano" class="form-control" placeholder="Ex: 2020">
+      </div>
+      
+      <div class="filter-group">
+        <label for="cor">Cor:</label>
+        <input type="text" id="cor" [(ngModel)]="filtro.cor" class="form-control" placeholder="Ex: Branco">
+      </div>
+      
+      <div class="filter-actions">
+        <button class="btn btn-secondary" (click)="aplicarFiltros()">Filtrar</button>
+        <button class="btn btn-outline" (click)="limparFiltros()">Limpar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <div *ngIf="error" class="alert alert-error">
+    {{ error }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando veículos...</p>
+  </div>
+
+  <!-- Lista de veículos -->
+  <div *ngIf="!loading && !showForm" class="veiculos-grid">
+    <div *ngFor="let veiculo of veiculos" class="veiculo-card">
+      <div class="veiculo-header">
+        <h3>{{ veiculo.veiculo }}</h3>
+        <span class="status" [class.vendido]="veiculo.vendido">
+          {{ veiculo.vendido ? 'Vendido' : 'Disponível' }}
+        </span>
+      </div>
+      
+      <div class="veiculo-info">
+        <p><strong>Marca:</strong> {{ veiculo.marca }}</p>
+        <p><strong>Ano:</strong> {{ veiculo.ano }}</p>
+        <p *ngIf="veiculo.cor"><strong>Cor:</strong> {{ veiculo.cor }}</p>
+        <p *ngIf="veiculo.descricao"><strong>Descrição:</strong> {{ veiculo.descricao }}</p>
+        <p *ngIf="veiculo.created"><strong>Cadastrado em:</strong> {{ veiculo.created | date:'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+      
+      <div class="veiculo-actions">
+        <button *ngIf="!veiculo.vendido" class="btn btn-success" (click)="marcarComoVendido(veiculo)">
+          Marcar como Vendido
+        </button>
+        <button class="btn btn-primary" (click)="editarVeiculo(veiculo)">
+          Editar
+        </button>
+        <button class="btn btn-danger" (click)="excluirVeiculo(veiculo.id!)">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem quando não há veículos -->
+  <div *ngIf="!loading && !showForm && veiculos.length === 0" class="no-veiculos">
+    <p>Nenhum veículo encontrado.</p>
+  </div>
+
+  <!-- Formulário de veículo -->
+  <app-veiculo-form 
+    *ngIf="showForm"
+    [veiculo]="veiculoEditando"
+    [marcasValidas]="marcasValidas"
+    (veiculoSalvo)="onVeiculoSalvo()"
+    (cancelar)="onCancelar()">
+  </app-veiculo-form>
+</div>
